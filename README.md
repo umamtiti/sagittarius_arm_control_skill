@@ -24,29 +24,45 @@ It is built around `sagittarius_openclaw_bridge` in `~/team2`, so OpenClaw can u
 Check whether the backend is ready:
 
 ```bash
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh status
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh status
 ```
 
 If the backend is not ready, start it:
 
 ```bash
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_backend.sh
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_backend.sh
 ```
 
 Common commands:
 
 ```bash
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh search
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh detect-color --color blue
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh pick-any
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh pick-once --color blue
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh pick-and-place --color blue --x 0.16 --y 0.24 --z 0.20 --pitch 1.57 --use-rpy
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh classify-once-fixed
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh sort-all-fixed
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_cmd.sh classify-once-map
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh search
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh detect-color --color blue
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-any
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-once --color blue
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-and-place --color blue --x 0.16 --y 0.24 --z 0.20 --pitch 1.57 --use-rpy
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh classify-once-fixed
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh sort-all-fixed
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh classify-once-map
 ```
 
 ## Failure Recovery
+
+If a command returns:
+
+```text
+ERROR: ROS master is not reachable at http://localhost:11311. Start 'roscore' or launch the backend before running this command.
+```
+
+or if a readiness/detection command waits for a long time without returning any `success:`, `result_code:`, or `message:` lines, treat this as a backend startup problem first. In practice, it usually means:
+
+```bash
+roslaunch sagittarius_openclaw_bridge openclaw_backend.launch
+```
+
+is not running.
+
+The right response is to remind the user to start the backend instead of continuing to retry the same arm command.
 
 If a command fails because the bridge service is missing, the backend is not ready, or `status` reports that the action server or camera is not ready, first try:
 
@@ -59,7 +75,7 @@ roslaunch sagittarius_openclaw_bridge openclaw_backend.launch
 In most cases, it is better to use the bundled launcher:
 
 ```bash
-~/.openclaw/workspace/skills/sagittarius-arm-control/scripts/arm_backend.sh
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_backend.sh
 ```
 
 ## Notes
