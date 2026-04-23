@@ -38,6 +38,7 @@ Common commands:
 ```bash
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh search
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh detect-color --color blue
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh detect-all-objects
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-any
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-once --color blue
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-and-place --color blue --x 0.16 --y 0.24 --z 0.20 --pitch 1.57 --use-rpy
@@ -81,5 +82,6 @@ In most cases, it is better to use the bundled launcher:
 ## Notes
 
 - `status`, `search`, and `detect-color` are good pre-check commands.
+- Use `detect-all-objects` when checking what objects/blocks are currently on the tabletop.
 - `pick-any`, `pick-once`, and `pick-and-place` are the most useful high-level commands for an agent.
 - `sort-all-fixed` and `classify-once-map` are better suited for full-task demos.

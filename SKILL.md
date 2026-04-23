@@ -87,6 +87,7 @@ Prefer high-level commands first:
 - Use `status` for health checks.
 - Use `search` to move to the observation pose.
 - Use `detect-color` when the task is to inspect or localize without grasping.
+- Use `detect-all-objects` when the user asks to check, count, or list tabletop objects/blocks.
 - Use `pick-any` when the user wants any visible block.
 - Use `pick-once --color <color>` when the user wants a specific color grasped and held.
 - Use `pick-and-place` when the user describes a full pick then place task.
@@ -100,6 +101,7 @@ Only use low-level `move`, `pick`, or `put` when the user gives explicit coordin
 
 - "Look around" or "go to observation pose" -> `search`
 - "What color block do you see?" -> `detect-color`
+- "Check the tabletop objects", "What blocks are on the table?", or "How many blocks do you see?" -> `detect-all-objects`
 - "Grab the blue block" -> `pick-once --color blue`
 - "Grab any block" -> `pick-any`
 - "Pick the blue block and place it at x/y/z" -> `pick-and-place --color blue --x ... --y ... --z ... --pitch 1.57 --use-rpy`
@@ -115,6 +117,7 @@ Read the output and reuse it in the conversation. `detected_color` and `target_x
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh search
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh detect-color --color blue
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh detect-color
+~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh detect-all-objects
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-once --color blue
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-any
 ~/.openclaw/workspace/skills/sagittarius_arm_control_skill/scripts/arm_cmd.sh pick-and-place --color blue --x 0.16 --y 0.24 --z 0.20 --pitch 1.57 --use-rpy
@@ -132,6 +135,7 @@ Read the output and reuse it in the conversation. `detected_color` and `target_x
 
 - Start with `status` unless the user already confirmed the backend is running.
 - For color tasks, prefer high-level commands over raw motion.
+- For tabletop inspection/counting/listing, use `detect-all-objects` instead of `detect-color`; it returns all visible block detections, colors, coordinates, and count.
 - For repeated sorting, use `sort-all-fixed` instead of manually chaining `pick-once` and `put`.
 - Use `pick-and-place` instead of separate `pick-once` and `put` when the user describes one closed-loop task.
 - If a command fails because no stable object was found, tell the user it is a vision issue rather than pretending motion failed.
